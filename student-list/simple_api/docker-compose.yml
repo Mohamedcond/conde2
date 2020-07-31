@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+
+  api:
+    image: student_list:latest
+    restart: always
+    ports:
+      - 8080:5000
+    volumes:
+      - ${PWD}/student_age.json:/data/student_age.json
+    networks:
+      - pozos
+
+  website:
+    image: php:apache
+    restart: always
+    environment:
+      USERNAME: "toto"
+      PASSWORD: "python"
+    networks:
+      - pozos
+    volumes:
+      - ./website:/var/www/html
+    depends_on:
+      - api
+networks:
+  pozos:
+     
+
